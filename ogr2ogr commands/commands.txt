@@ -1,0 +1,6 @@
+ogr2ogr -f "GeoJSON" cheeses.geojson PG:"host=localhost user='duncankinnear' dbname=duncankinnear password='guinness'" -sql "select a.cheese_id, a.name, a.notes, a.image, b.name as name2, st_transform(b.geom, 4326) from cheese a, producers b where a.producer_id = b.producer_id"
+
+ogr2ogr -f "GeoJSON" producers.geojson PG:"host=localhost user='duncankinnear' dbname=duncankinnear password='guinness'" -sql "select producer_id, name, url, address, phone, email, image, st_transform(geom, 4326) from producers"
+
+ogr2ogr -f "GeoJSON" regions.geojson PG:"host=localhost user='duncankinnear' dbname=duncankinnear password='guinness'" -sql "select region_id, name, st_transform(geom, 4326) from regions"
+
