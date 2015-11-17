@@ -14,7 +14,7 @@ var oms = new OverlappingMarkerSpiderfier(map, {
 
 oms.addListener('click', function(marker) {
   var cont = marker.getPopup().getContent();
-  $("#feature-title").html('hello');
+  // $("#feature-title").html('hello');
   $("#feature-info").html(cont);
   $("#featureModal").modal("show");
 });
@@ -97,7 +97,7 @@ function clearHighlight() {
 
 function sidebarClick(id) {
   var layer = markerClusters.getLayer(id);
-  map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 16);
+  map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 14);
   layer.fire("click");
   /* Hide sidebar and go to the map on small screens */
   if (document.body.clientWidth <= 767) {
@@ -138,29 +138,35 @@ function syncSidebar() {
 var Esri_WorldImagery = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
   attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
-map.addLayer(Esri_WorldImagery);
+// map.addLayer(Esri_WorldImagery);
 var Stamen_Watercolor = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
   attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   subdomains: 'abcd',
-  minZoom: 1,
+  minZoom: 5,
   maxZoom: 14,
   ext: 'png'
 });
+map.addLayer(Stamen_Watercolor);
+
 var mapquestOSM = L.tileLayer("http://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png", {
   maxZoom: 14,
+  minZoom: 5,
   subdomains: ["otile1", "otile2", "otile3", "otile4"],
   attribution: 'Tiles courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png">. Map data (c) <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> contributors, CC-BY-SA.'
 });
 var mapquestOAM = L.tileLayer("http://{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpg", {
-  maxZoom: 11,
+  maxZoom: 14,
+  minZoom: 5,
   subdomains: ["oatile1", "oatile2", "oatile3", "oatile4"],
   attribution: 'Tiles courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a>. Portions Courtesy NASA/JPL-Caltech and U.S. Depart. of Agriculture, Farm Service Agency'
 });
 var mapquestHYB = L.layerGroup([L.tileLayer("http://{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpg", {
   maxZoom: 14,
+  minZoom: 5,
   subdomains: ["oatile1", "oatile2", "oatile3", "oatile4"]
 }), L.tileLayer("http://{s}.mqcdn.com/tiles/1.0.0/hyb/{z}/{x}/{y}.png", {
   maxZoom: 14,
+  minZoom: 5,
   subdomains: ["oatile1", "oatile2", "oatile3", "oatile4"],
   attribution: 'Labels courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png">. Map data (c) <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> contributors, CC-BY-SA. Portions Courtesy NASA/JPL-Caltech and U.S. Depart. of Agriculture, Farm Service Agency'
 })]);
@@ -178,7 +184,9 @@ var regions = L.geoJson(null, {
   style: function (feature) {
     return {
       color: "black",
-      fill: false,
+      fill: true,
+      fillColor: "blue",
+      fillOpacity: 0.2,
       opacity: 1,
       clickable: false
     };
@@ -201,7 +209,7 @@ $.getJSON("data/regions.geojson", function (data) {
 var cheeseLayer = L.geoJson(null);
 var cheeses = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
-    var content = "<img src='assets/img/" + feature.properties.image + "'class='img-responsive'><table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.name + "</td></tr>" + "<tr><th>Notes</th><td>" + feature.properties.notes + "</td></tr>" + "<tr><th>Producer</th><td>" + feature.properties.name2 + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.name + "' target='_blank'>" + feature.properties.name + "</a></td></tr>" + "<table>";
+    var content = "<img src='assets/img/" + feature.properties.image + "'class='img-responsive'><h4>" + feature.properties.name + "</h4><h5>" + feature.properties.name2 + "</h5><p><i>" + feature.properties.notes + "</i></p>";
     mrk = L.marker(latlng, {
       icon: L.icon({
         iconUrl: "assets/img/cheese.png",
@@ -272,7 +280,7 @@ var markerClusters = new L.MarkerClusterGroup({
 var producerLayer = L.geoJson(null);
 var producers = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
-    var content = "<img src='assets/img/" + feature.properties.image + "'class='img-responsive'><table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.name + "</td></tr>" + "<tr><th>Phone</th><td>" + feature.properties.phone + "</td></tr>" + "<tr><th>Address</th><td>" + feature.properties.address + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.url + "' target='_blank'>" + feature.properties.url + "</a></td></tr>" + "<table>";
+    var content = "<img src='assets/img/" + feature.properties.image + "'class='img-responsive' style='display:block;margin-left:auto;margin-right:auto'><table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.name + "</td></tr>" + "<tr><th>Phone</th><td>" + feature.properties.phone + "</td></tr>" + "<tr><th>Address</th><td>" + feature.properties.address + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.url + "' target='_blank'>" + feature.properties.url + "</a></td></tr>" + "<table>";
 
     mrk = L.marker(latlng, {
       icon: L.icon({
@@ -428,7 +436,7 @@ if (document.body.clientWidth <= 767) {
 
 var baseLayers = {
   "Street Map": mapquestOSM,
-  "Aerial Imagery": mapquestOAM,
+  // "Aerial Imagery": mapquestOAM,
   "Imagery with Streets": mapquestHYB,
   "Stamen Watercolor": Stamen_Watercolor,
   "Imagery": Esri_WorldImagery

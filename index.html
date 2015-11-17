@@ -50,9 +50,9 @@
               <a id="toolsDrop" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe white"></i>&nbsp;&nbsp;Tools <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="full-extent-btn"><i class="fa fa-arrows-alt"></i>&nbsp;&nbsp;Zoom To Full Extent</a></li>
-                <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="legend-btn"><i class="fa fa-picture-o"></i>&nbsp;&nbsp;Show Legend</a></li>
-                <li class="divider hidden-xs"></li>
-                <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Login</a></li>
+                <!-- <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="legend-btn"><i class="fa fa-picture-o"></i>&nbsp;&nbsp;Show Legend</a></li>
+                <li class="divider hidden-xs"></li> -->
+                <!-- <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Login</a></li> -->
               </ul>
             </li>
             <li class="dropdown">
@@ -63,7 +63,7 @@
                   <li><a href="data/cheeses.geojson" download="cheeses.geojson" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;Cheeses</a></li>
                 </ul>
             </li>
-            <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="list-btn"><i class="fa fa-list white"></i>&nbsp;&nbsp;POI List</a></li>
+            <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="list-btn"><i class="fa fa-list white"></i>&nbsp;&nbsp;Show Feature List</a></li>
           </ul>
         </div><!--/.navbar-collapse -->
       </div>
@@ -74,7 +74,7 @@
         <div class="sidebar-wrapper">
           <div class="panel panel-default" id="features">
             <div class="panel-heading">
-              <h3 class="panel-title">Points of Interest
+              <h3 class="panel-title">Visible Features
               <button type="button" class="btn btn-xs btn-default pull-right" id="sidebar-hide-btn"><i class="fa fa-chevron-left"></i></button></h3>
             </div>
             <div class="panel-body">
@@ -121,24 +121,36 @@
         <div class="modal-content">
           <div class="modal-header">
             <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Welcome to the BootLeaf template!</h4>
+            <h4 class="modal-title">Welcome to the Cheese Map of Scotland!</h4>
           </div>
           <div class="modal-body">
             <ul class="nav nav-tabs" id="aboutTabs">
               <li class="active"><a href="#about" data-toggle="tab"><i class="fa fa-question-circle"></i>&nbsp;About the project</a></li>
               <li><a href="#contact" data-toggle="tab"><i class="fa fa-envelope"></i>&nbsp;Contact us</a></li>
               <li><a href="#disclaimer" data-toggle="tab"><i class="fa fa-exclamation-circle"></i>&nbsp;Disclaimer</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe"></i>&nbsp;Metadata <b class="caret"></b></a>
+              <li><a href="#boroughs-tab" data-toggle="tab"><i class="fa fa-globe"></i>&nbsp;Data</a></li>
+
+              <!-- <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe"></i>&nbsp;Data <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="#boroughs-tab" data-toggle="tab">Regions</a></li>
                   <li><a href="#theaters-tab" data-toggle="tab">Producers</a></li>
                   <li><a href="#museums-tab" data-toggle="tab">Cheeses</a></li>
                 </ul>
-              </li>
+              </li> -->
             </ul>
             <div class="tab-content" id="aboutTabsContent">
               <div class="tab-pane fade active in" id="about">
+                <p>This map shows some of the wealth of cheeses available in Scotland today, together with information on some of the 
+                dairy producers who make the cheese. Compiled through my own internet research, the data displayed on the map is rendered from GeoJSON files exported from a PostGIS database storing the data, using the
+                <a href="https://github.com/bmcbride/bootleaf" target="_blank">Bootleaf</a> template developed by Bryan McBride, details of which are outlined below.</p>
+                <p>Explore the map using the cursor and by clicking on the cheeses and producers visible to find out more, or use the search bar to look for specific cheeses, for example, 'brie'.</p>
+                <img src="assets/img/home.jpg" alt="Mountain View" style="width:80%;height:80%">
+
+                <p style="text-align:center">Credit: <i>https://food.list.co.uk</i></p>
+
+                <h4>Bootleaf</h4>
+           
                 <p>A simple, responsive template for building web mapping applications with <a href="http://getbootstrap.com/">Bootstrap 3</a>, <a href="http://leafletjs.com/" target="_blank">Leaflet</a>, and <a href="http://twitter.github.io/typeahead.js/" target="_blank">typeahead.js</a>. Open source, MIT licensed, and available on <a href="https://github.com/bmcbride/bootleaf" target="_blank">GitHub</a>.</p>
                 <div class="panel panel-primary">
                   <div class="panel-heading">Features</div>
@@ -188,17 +200,9 @@
                 </form>
               </div>
               <div class="tab-pane fade" id="boroughs-tab">
-                <p>Borough data courtesy of <a href="http://www.nyc.gov/html/dcp/pdf/bytes/nybbwi_metadata.pdf" target="_blank">New York City Department of City Planning</a></p>
+                <p>Cheese data courtesy of <a href="http://clarkscheese.blogspot.co.uk/2013/01/scottish-cheese-map.html" target="_blank">The Cheese Blog's</a> 2013 map of Scottish Cheeses, with information and images taken from the various cheese producers' websites.</p>
               </div>
-              <div class="tab-pane fade" id="subway-lines-tab">
-                <p><a href="http://spatialityblog.com/2010/07/08/mta-gis-data-update/#datalinks" target="_blank">MTA Subway data</a> courtesy of the <a href="http://www.urbanresearch.org/about/cur-components/cuny-mapping-service" target="_blank">CUNY Mapping Service at the Center for Urban Research</a></p>
-              </div>
-              <div class="tab-pane fade" id="theaters-tab">
-                <p>Theater data courtesy of <a href="https://data.cityofnewyork.us/Recreation/Theaters/kdu2-865w" target="_blank">NYC Department of Information & Telecommunications (DoITT)</a></p>
-              </div>
-              <div class="tab-pane fade" id="museums-tab">
-                <p>Museum data courtesy of <a href="https://data.cityofnewyork.us/Recreation/Museums-and-Galleries/sat5-adpb" target="_blank">NYC Department of Information & Telecommunications (DoITT)</a></p>
-              </div>
+          
             </div>
           </div>
           <div class="modal-footer">
@@ -208,7 +212,7 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-    <div class="modal fade" id="legendModal" tabindex="-1" role="dialog">
+<!--     <div class="modal fade" id="legendModal" tabindex="-1" role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -220,12 +224,12 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+          </div> -->
+        <!-- </div>/.modal-content -->
+      <!-- </div>/.modal-dialog -->
+    <!-- </div>/.modal -->
 
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
+  <!--   <div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-sm">
         <div class="modal-content">
           <div class="modal-header">
@@ -248,11 +252,11 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary" data-dismiss="modal">Login</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+            <button type="submit" class="btn btn-primary" data-dismiss="modal">Login</button> -->
+          <!-- </div> -->
+        <!-- </div>/.modal-content -->
+      <!-- </div>/.modal-dialog -->
+    <!-- </div>/.modal -->
 
     <div class="modal fade" id="featureModal" tabindex="-1" role="dialog">
       <div class="modal-dialog">
@@ -265,9 +269,9 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+        </div>/<!-- .modal-content -->
+      </div>/<!-- .modal-dialog -->
+    </div>/<!-- .modal -->
 
     <div class="modal fade" id="attributionModal" tabindex="-1" role="dialog">
       <div class="modal-dialog">
