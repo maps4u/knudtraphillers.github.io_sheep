@@ -1,4 +1,4 @@
-var map, featureList, regionSearch = [], producerSearch = [], cheeseSearch = [];
+var map, featureList, regionSearch = [], cowSearch = [], goatSearch = [], sheepSearch = [];
 
 map = L.map("map", {
   zoom: 8,
@@ -109,17 +109,25 @@ function sidebarClick(id) {
 function syncSidebar() {
   /* Empty sidebar features */
   $("#feature-list tbody").empty();
-  /* Loop through  layer and add only features which are in the map bounds */
-  producers.eachLayer(function (layer) {
-    if (map.hasLayer(producerLayer)) {
+  /* Loop through cows layer and add only features which are in the map bounds */
+  cows.eachLayer(function (layer) {
+    if (map.hasLayer(cowLayer)) {
       if (map.getBounds().contains(layer.getLatLng())) {
         $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/cow.png"></td><td class="feature-name">' + layer.feature.properties.name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     }
   });
-  /* Loop through museums layer and add only features which are in the map bounds */
-  cheeses.eachLayer(function (layer) {
-    if (map.hasLayer(cheeseLayer)) {
+  /* Loop through goats layer and add only features which are in the map bounds */
+  goats.eachLayer(function (layer) {
+    if (map.hasLayer(goatLayer)) {
+      if (map.getBounds().contains(layer.getLatLng())) {
+        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/cheese.png"></td><td class="feature-name">' + layer.feature.properties.name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+      }
+    }
+  });
+  /* Loop through sheep layer and add only features which are in the map bounds */
+  sheep.eachLayer(function (layer) {
+    if (map.hasLayer(sheepLayer)) {
       if (map.getBounds().contains(layer.getLatLng())) {
         $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/cheese.png"></td><td class="feature-name">' + layer.feature.properties.name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
@@ -180,41 +188,43 @@ var highlightStyle = {
   radius: 10
 };
 
-var regions = L.geoJson(null, {
-  style: function (feature) {
-    return {
-      color: "black",
-      fill: true,
-      fillColor: "blue",
-      fillOpacity: 0.2,
-      opacity: 1,
-      clickable: false
-    };
-  },
-  onEachFeature: function (feature, layer) {
-    regionSearch.push({
-      name: layer.feature.properties.name,
-      source: "Regions",
-      id: L.stamp(layer),
-      bounds: layer.getBounds()
-    });
-  }
-});
-$.getJSON("data/regions.geojson", function (data) {
-  regions.addData(data);
-});
+// var regions = L.geoJson(null, {
+//   style: function (feature) {
+//     return {
+//       color: "black",
+//       fill: true,
+//       fillColor: "blue",
+//       fillOpacity: 0.2,
+//       opacity: 1,
+//       clickable: false
+//     };
+//   },
+//   onEachFeature: function (feature, layer) {
+//     regionSearch.push({
+//       name: layer.feature.properties.name,
+//       source: "Regions",
+//       id: L.stamp(layer),
+//       bounds: layer.getBounds()
+//     });
+//   }
+// });
+// $.getJSON("data/regions.geojson", function (data) {
+//   regions.addData(data);
+// });
 
 
-/* Empty layer placeholder to add to layer control for listening when to add/remove museums to markerClusters layer */
-var cheeseLayer = L.geoJson(null);
-var cheeses = L.geoJson(null, {
+/* Empty layer placeholder to add to layer control for listening when to add/remove cheeses to markerClusters layer */
+var cowLayer = L.geoJson(null);
+
+var cows = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
-    var content = "<img src='assets/img/" + feature.properties.image + "'class='img-responsive'><h4>" + feature.properties.name + "</h4><h5>" + feature.properties.name2 + "</h5><p><i>" + feature.properties.notes + "</i></p>";
+    var content = "<img src='assets/img/cheese/" + feature.properties.image + "'.jpg'class='img-responsive' style='width:50%;display:block;margin-left:auto;margin-right:auto'><h4>" + feature.properties.name + "</h4><h5>" + feature.properties.name2 + "</h5><p><i>" + feature.properties.notes + "</i></p>";
+    window.alert (feature.properties.herd);
     mrk = L.marker(latlng, {
       icon: L.icon({
-        iconUrl: "assets/img/cheese.png",
-        iconSize: [50, 50],
-        iconAnchor: [12, 28],
+        iconUrl: "assets/img/" + feature.properties.herd + ".png",
+        iconSize: [40, 60],
+        iconAnchor: [20, 60],
         popupAnchor: [0, -25]
       }),
       title: feature.properties.name,
@@ -232,7 +242,7 @@ var cheeses = L.geoJson(null, {
   onEachFeature: function (feature, layer) {
     
     if (feature.properties) {
-      var content = "<img src='assets/img/" + feature.properties.image + "'class='img-responsive'><table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.name + "</td></tr>" + "<tr><th>Notes</th><td>" + feature.properties.notes + "</td></tr>" + "<tr><th>Producer</th><td>" + feature.properties.name2 + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.name + "' target='_blank'>" + feature.properties.name + "</a></td></tr>" + "<table>";
+      var content = "<img src='assets/img/cheese/" + feature.properties.image + "'.jpg' ><table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.name + "</td></tr>" + "<tr><th>Notes</th><td>" + feature.properties.notes + "</td></tr>" + "<tr><th>Producer</th><td>" + feature.properties.name2 + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.name + "' target='_blank'>" + feature.properties.name + "</a></td></tr>" + "<table>";
       layer.on({
         // click: function (e) {
         //   $("#feature-title").html(feature.properties.name);
@@ -242,10 +252,10 @@ var cheeses = L.geoJson(null, {
         // }
       });
       $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/cheese.png"></td><td class="feature-name">' + layer.feature.properties.name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
-      cheeseSearch.push({
+      cowSearch.push({
         name: layer.feature.properties.name,
         address: layer.feature.properties.notes,
-        source: "Cheeses",
+        source: "Cows",
         id: L.stamp(layer),
         lat: layer.feature.geometry.coordinates[1],
         lng: layer.feature.geometry.coordinates[0]
@@ -253,10 +263,122 @@ var cheeses = L.geoJson(null, {
     }
   }
 });
-$.getJSON("data/cheeses.geojson", function (data) {
-  cheeses.addData(data);
-  markerClusters.addLayer(cheeses);
-  map.addLayer(cheeseLayer);
+$.getJSON("data/cows.geojson", function (data) {
+  cows.addData(data);
+  markerClusters.addLayer(cows);
+  map.addLayer(cowLayer);
+});
+
+/* Empty layer placeholder to add to layer control for listening when to add/remove cheeses to markerClusters layer */
+var goatLayer = L.geoJson(null);
+
+var goats = L.geoJson(null, {
+  pointToLayer: function (feature, latlng) {
+    var content = "<img src='assets/img/cheese/" + feature.properties.image + "'.jpg'class='img-responsive' style='width:50%;display:block;margin-left:auto;margin-right:auto'><h4>" + feature.properties.name + "</h4><h5>" + feature.properties.name2 + "</h5><p><i>" + feature.properties.notes + "</i></p>";
+    window.alert (feature.properties.herd);
+    mrk = L.marker(latlng, {
+      icon: L.icon({
+        iconUrl: "assets/img/" + feature.properties.herd + ".png",
+        iconSize: [40, 60],
+        iconAnchor: [20, 60],
+        popupAnchor: [0, -25]
+      }),
+      title: feature.properties.name,
+      riseOnHover: true
+    });
+    var popup = L.popup(
+      closeOnClick=true)
+
+      .setContent(content)
+
+    mrk.bindPopup(popup);
+    oms.addMarker(mrk);
+    return mrk;
+  },
+  onEachFeature: function (feature, layer) {
+    
+    if (feature.properties) {
+      var content = "<img src='assets/img/cheese/" + feature.properties.image + "'.jpg' ><table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.name + "</td></tr>" + "<tr><th>Notes</th><td>" + feature.properties.notes + "</td></tr>" + "<tr><th>Producer</th><td>" + feature.properties.name2 + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.name + "' target='_blank'>" + feature.properties.name + "</a></td></tr>" + "<table>";
+      layer.on({
+        // click: function (e) {
+        //   $("#feature-title").html(feature.properties.name);
+        //   $("#feature-info").html(content);
+        //   $("#featureModal").modal("show");
+        //   highlight.clearLayers().addLayer(L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], highlightStyle));
+        // }
+      });
+      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/cheese.png"></td><td class="feature-name">' + layer.feature.properties.name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+      goatSearch.push({
+        name: layer.feature.properties.name,
+        address: layer.feature.properties.notes,
+        source: "Goats",
+        id: L.stamp(layer),
+        lat: layer.feature.geometry.coordinates[1],
+        lng: layer.feature.geometry.coordinates[0]
+      });
+    }
+  }
+});
+$.getJSON("data/goats.geojson", function (data) {
+  goats.addData(data);
+  markerClusters.addLayer(goats);
+  map.addLayer(goatLayer);
+});
+
+/* Empty layer placeholder to add to layer control for listening when to add/remove cheeses to markerClusters layer */
+var sheepLayer = L.geoJson(null);
+
+var sheep = L.geoJson(null, {
+  pointToLayer: function (feature, latlng) {
+    var content = "<img src='assets/img/cheese/" + feature.properties.image + "'.jpg'class='img-responsive' style='width:50%;display:block;margin-left:auto;margin-right:auto'><h4>" + feature.properties.name + "</h4><h5>" + feature.properties.name2 + "</h5><p><i>" + feature.properties.notes + "</i></p>";
+    window.alert (feature.properties.herd);
+    mrk = L.marker(latlng, {
+      icon: L.icon({
+        iconUrl: "assets/img/" + feature.properties.herd + ".png",
+        iconSize: [40, 60],
+        iconAnchor: [20, 60],
+        popupAnchor: [0, -25]
+      }),
+      title: feature.properties.name,
+      riseOnHover: true
+    });
+    var popup = L.popup(
+      closeOnClick=true)
+
+      .setContent(content)
+
+    mrk.bindPopup(popup);
+    oms.addMarker(mrk);
+    return mrk;
+  },
+  onEachFeature: function (feature, layer) {
+    
+    if (feature.properties) {
+      var content = "<img src='assets/img/cheese/" + feature.properties.image + "'.jpg' ><table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.name + "</td></tr>" + "<tr><th>Notes</th><td>" + feature.properties.notes + "</td></tr>" + "<tr><th>Producer</th><td>" + feature.properties.name2 + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.name + "' target='_blank'>" + feature.properties.name + "</a></td></tr>" + "<table>";
+      layer.on({
+        // click: function (e) {
+        //   $("#feature-title").html(feature.properties.name);
+        //   $("#feature-info").html(content);
+        //   $("#featureModal").modal("show");
+        //   highlight.clearLayers().addLayer(L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], highlightStyle));
+        // }
+      });
+      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/cheese.png"></td><td class="feature-name">' + layer.feature.properties.name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+      sheepSearch.push({
+        name: layer.feature.properties.name,
+        address: layer.feature.properties.notes,
+        source: "Sheep",
+        id: L.stamp(layer),
+        lat: layer.feature.geometry.coordinates[1],
+        lng: layer.feature.geometry.coordinates[0]
+      });
+    }
+  }
+});
+$.getJSON("data/sheep.geojson", function (data) {
+  sheep.addData(data);
+  markerClusters.addLayer(sheep);
+  map.addLayer(sheepLayer);
 });
 
 /* Single marker cluster layer to hold all clusters */
@@ -277,85 +399,93 @@ var markerClusters = new L.MarkerClusterGroup({
 
 
 // /* Empty layer placeholder to add to layer control for listening when to add/remove theaters to markerClusters layer */
-var producerLayer = L.geoJson(null);
-var producers = L.geoJson(null, {
-  pointToLayer: function (feature, latlng) {
-    var content = "<img src='assets/img/" + feature.properties.image + "'class='img-responsive' style='display:block;margin-left:auto;margin-right:auto'><table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.name + "</td></tr>" + "<tr><th>Phone</th><td>" + feature.properties.phone + "</td></tr>" + "<tr><th>Address</th><td>" + feature.properties.address + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.url + "' target='_blank'>" + feature.properties.url + "</a></td></tr>" + "<table>";
+// var producerLayer = L.geoJson(null);
+// var producers = L.geoJson(null, {
+//   pointToLayer: function (feature, latlng) {
+//     var content = "<img src='assets/img/" + feature.properties.image + "'class='img-responsive' style='display:block;margin-left:auto;margin-right:auto'><table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.name + "</td></tr>" + "<tr><th>Phone</th><td>" + feature.properties.phone + "</td></tr>" + "<tr><th>Address</th><td>" + feature.properties.address + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.url + "' target='_blank'>" + feature.properties.url + "</a></td></tr>" + "<table>";
 
-    mrk = L.marker(latlng, {
-      icon: L.icon({
-        iconUrl: "assets/img/cow.png",
-        iconSize: [50, 50],
-        iconAnchor: [0, 50],
-        popupAnchor: [0, -25]
-      }),
-      title: feature.properties.name,
-      riseOnHover: true
-    });
-    var popup = L.popup(
-      closeOnClick=true)
+//     mrk = L.marker(latlng, {
+//       icon: L.icon({
+//         iconUrl: "assets/img/cheese.png",
+//         iconSize: [50, 50],
+//         iconAnchor: [0, 50],
+//         popupAnchor: [0, -25]
+//       }),
+//       title: feature.properties.name,
+//       riseOnHover: true
+//     });
+//     var popup = L.popup(
+//       closeOnClick=true)
     
-      .setContent(content)
+//       .setContent(content)
 
-    mrk.bindPopup(popup);
-    oms.addMarker(mrk);
+//     mrk.bindPopup(popup);
+//     oms.addMarker(mrk);
 
-    return mrk;
+//     return mrk;
     
-  },
-  onEachFeature: function (feature, layer) {
+//   },
+//   onEachFeature: function (feature, layer) {
     
-    if (feature.properties) {
-      var content = "<img src='assets/img/" + feature.properties.image + "'class='img-responsive'><table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.name + "</td></tr>" + "<tr><th>Phone</th><td>" + feature.properties.phone + "</td></tr>" + "<tr><th>Address</th><td>" + feature.properties.address + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.url + "' target='_blank'>" + feature.properties.url + "</a></td></tr>" + "<table>";
-      layer.on({
-        // click: function (e) {
-        //   $("#feature-title").html(feature.properties.name);
-        //   $("#feature-info").html(content);
-        //   $("#featureModal").modal("show");
-        //   highlight.clearLayers().addLayer(L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], highlightStyle));
-        // }
-      });
-      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/cow.png"></td><td class="feature-name">' + layer.feature.properties.name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
-      producerSearch.push({
-        name: layer.feature.properties.name,
-        address: layer.feature.properties.name,
-        source: "Producers",
-        id: L.stamp(layer),
-        lat: layer.feature.geometry.coordinates[1],
-        lng: layer.feature.geometry.coordinates[0]
-      });
-    }
-  }
-});
-$.getJSON("data/producers.geojson", function (data) {
-  producers.addData(data);
-  // map.addLayer(producers);
-  markerClusters.addLayer(producers);
-  map.addLayer(producerLayer);
-});
+//     if (feature.properties) {
+//       var content = "<img src='assets/img/" + feature.properties.image + "'class='img-responsive'><table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.name + "</td></tr>" + "<tr><th>Phone</th><td>" + feature.properties.phone + "</td></tr>" + "<tr><th>Address</th><td>" + feature.properties.address + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.url + "' target='_blank'>" + feature.properties.url + "</a></td></tr>" + "<table>";
+//       layer.on({
+//         // click: function (e) {
+//         //   $("#feature-title").html(feature.properties.name);
+//         //   $("#feature-info").html(content);
+//         //   $("#featureModal").modal("show");
+//         //   highlight.clearLayers().addLayer(L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], highlightStyle));
+//         // }
+//       });
+//       $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/cow.png"></td><td class="feature-name">' + layer.feature.properties.name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+//       producerSearch.push({
+//         name: layer.feature.properties.name,
+//         address: layer.feature.properties.name,
+//         source: "Producers",
+//         id: L.stamp(layer),
+//         lat: layer.feature.geometry.coordinates[1],
+//         lng: layer.feature.geometry.coordinates[0]
+//       });
+//     }
+//   }
+// });
+// $.getJSON("data/producers.geojson", function (data) {
+//   producers.addData(data);
+//   // map.addLayer(producers);
+//   markerClusters.addLayer(producers);
+//   map.addLayer(producerLayer);
+// });
 
 
 
 /* Layer control listeners that allow for a single markerClusters layer */
 map.on("overlayadd", function(e) {
   
-  if (e.layer === cheeseLayer) {
-    map.addLayer(cheeses);
+  if (e.layer === cowLayer) {
+    map.addLayer(cows);
     syncSidebar();
   }
-  if (e.layer === producerLayer) {
-    map.addLayer(producers);
+  if (e.layer === goatLayer) {
+    map.addLayer(goats);
+    syncSidebar();
+  }
+  if (e.layer === sheepLayer) {
+    map.addLayer(sheep);
     syncSidebar();
   }
 });
 
 map.on("overlayremove", function(e) {
-  if (e.layer === producerLayer) {
-    map.removeLayer(producers);
+  if (e.layer === cowLayer) {
+    map.removeLayer(cows);
     syncSidebar();
   }
-  if (e.layer === cheeseLayer) {
-    map.removeLayer(cheeses);
+  if (e.layer === goatLayer) {
+    map.removeLayer(goats);
+    syncSidebar();
+  }
+  if (e.layer === sheepLayer) {
+    map.removeLayer(sheep);
     syncSidebar();
   }
 });
@@ -444,11 +574,12 @@ var baseLayers = {
 
 var groupedOverlays = {
   "Points of Interest": {
-    "<img src='assets/img/cow.png' width='24' height='28'>&nbsp;Producers": producerLayer,
-    "<img src='assets/img/cheese.png' width='24' height='28'>&nbsp;Cheeses": cheeseLayer
-  },
-  "Reference": {
-    "Regions": regions
+    "<img src='assets/img/cow.png' width='24' height='34'>&nbsp;Cow's Cheeses": cowLayer,
+    "<img src='assets/img/goat.png' width='24' height='34'>&nbsp;Goat's Cheeses": goatLayer,
+    "<img src='assets/img/sheep.png' width='24' height='34'>&nbsp;Sheep's Cheeses": sheepLayer
+  // },
+  // "Reference": {
+  //   "Regions": regions
   }
 };
 
@@ -481,33 +612,33 @@ $(document).one("ajaxStop", function () {
   featureList = new List("features", {valueNames: ["feature-name"]});
   featureList.sort("feature-name", {order:"asc"});
 
-  var boroughsBH = new Bloodhound({
-    name: "Regions",
+  var cowsBH = new Bloodhound({
+    name: "Cows",
     datumTokenizer: function (d) {
       return Bloodhound.tokenizers.whitespace(d.name);
     },
     queryTokenizer: Bloodhound.tokenizers.whitespace,
-    local: regionSearch,
+    local: cowSearch,
     limit: 10
   });
 
-  var theatersBH = new Bloodhound({
-    name: "Producers",
+  var goatsBH = new Bloodhound({
+    name: "Goats",
     datumTokenizer: function (d) {
       return Bloodhound.tokenizers.whitespace(d.name);
     },
     queryTokenizer: Bloodhound.tokenizers.whitespace,
-    local: producerSearch,
+    local: goatSearch,
     limit: 10
   });
 
-  var museumsBH = new Bloodhound({
-    name: "Cheeses",
+  var sheepBH = new Bloodhound({
+    name: "Sheep",
     datumTokenizer: function (d) {
       return Bloodhound.tokenizers.whitespace(d.name);
     },
     queryTokenizer: Bloodhound.tokenizers.whitespace,
-    local: cheeseSearch,
+    local: sheepSearch,
     limit: 10
   });
 
@@ -541,9 +672,9 @@ $(document).one("ajaxStop", function () {
     },
     limit: 10
   });
-  boroughsBH.initialize();
-  theatersBH.initialize();
-  museumsBH.initialize();
+  cowsBH.initialize();
+  goatsBH.initialize();
+  sheepBH.initialize();
   geonamesBH.initialize();
 
   /* instantiate the typeahead UI */
@@ -552,26 +683,27 @@ $(document).one("ajaxStop", function () {
     highlight: true,
     hint: false
   }, {
-    name: "Regions",
+    name: "Cows",
     displayKey: "name",
-    source: boroughsBH.ttAdapter(),
+    source: cowsBH.ttAdapter(),
     templates: {
-      header: "<h4 class='typeahead-header'>Regions</h4>"
-    }
-  }, {
-    name: "Producers",
-    displayKey: "name",
-    source: theatersBH.ttAdapter(),
-    templates: {
-      header: "<h4 class='typeahead-header'><img src='assets/img/cow.png' width='24' height='28'>&nbsp;Producers</h4>",
+      header: "<h4 class='typeahead-header'><img src='assets/img/cow.png' width='24' height='32'>&nbsp;Cow's Cheeses</h4>",
       suggestion: Handlebars.compile(["{{name}}<br>&nbsp;<small>{{address}}</small>"].join(""))
     }
   }, {
-    name: "Cheeses",
+    name: "Goats",
     displayKey: "name",
-    source: museumsBH.ttAdapter(),
+    source: goatsBH.ttAdapter(),
     templates: {
-      header: "<h4 class='typeahead-header'><img src='assets/img/cheese.png' width='24' height='28'>&nbsp;Cheeses</h4>",
+      header: "<h4 class='typeahead-header'><img src='assets/img/goat.png' width='24' height='32'>&nbsp;Goat's Cheeses</h4>",
+      suggestion: Handlebars.compile(["{{name}}<br>&nbsp;<small>{{address}}</small>"].join(""))
+    }
+  }, {
+    name: "Sheep",
+    displayKey: "name",
+    source: sheepBH.ttAdapter(),
+    templates: {
+      header: "<h4 class='typeahead-header'><img src='assets/img/sheep.png' width='24' height='32'>&nbsp;Sheep's Cheeses</h4>",
       suggestion: Handlebars.compile(["{{name}}<br>&nbsp;<small>{{address}}</small>"].join(""))
     }
   }, {
@@ -582,24 +714,36 @@ $(document).one("ajaxStop", function () {
       header: "<h4 class='typeahead-header'><img src='assets/img/globe.png' width='25' height='25'>&nbsp;GeoNames</h4>"
     }
   }).on("typeahead:selected", function (obj, datum) {
-    if (datum.source === "Regions") {
-      map.fitBounds(datum.bounds);
-    }
-    if (datum.source === "Producers") {
-      if (!map.hasLayer(producerLayer)) {
-        map.addLayer(producerLayer);
+    // if (datum.source === "Cows") {
+    //   map.fitBounds(datum.bounds);
+    // }
+    if (datum.source === "Cows") {
+      if (!map.hasLayer(cowLayer)) {
+        map.addLayer(cowLayer);
       }
       map.setView([datum.lat, datum.lng], 17);
       if (map._layers[datum.id]) {
         map._layers[datum.id].fire("click");
+        map._layers[datum.id].fire("click");
       }
     }
-    if (datum.source === "Cheeses") {
-      if (!map.hasLayer(cheeseLayer)) {
-        map.addLayer(cheeseLayer);
+    if (datum.source === "Goats") {
+      if (!map.hasLayer(goatLayer)) {
+        map.addLayer(goatLayer);
       }
       map.setView([datum.lat, datum.lng], 17);
       if (map._layers[datum.id]) {
+        map._layers[datum.id].fire("click");
+        map._layers[datum.id].fire("click");
+      }
+    }
+    if (datum.source === "Sheep") {
+      if (!map.hasLayer(sheepLayer)) {
+        map.addLayer(sheepLayer);
+      }
+      map.setView([datum.lat, datum.lng], 17);
+      if (map._layers[datum.id]) {
+        map._layers[datum.id].fire("click");
         map._layers[datum.id].fire("click");
       }
     }
