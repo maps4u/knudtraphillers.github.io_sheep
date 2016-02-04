@@ -222,7 +222,7 @@ var cows = L.geoJson(null, {
     window.alert (feature.properties.herd);
     mrk = L.marker(latlng, {
       icon: L.icon({
-        iconUrl: "../img/" + feature.properties.herd + ".png",
+        iconUrl: "../im/" + feature.properties.herd + ".png",
         iconSize: [40, 60],
         iconAnchor: [20, 60],
         popupAnchor: [0, -25]
