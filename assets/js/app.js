@@ -242,7 +242,7 @@ var cows = L.geoJson(null, {
   onEachFeature: function (feature, layer) {
     
     if (feature.properties) {
-      var content = "<img src='../img/cheese/" + feature.properties.image + "'.jpg' ><table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.name + "</td></tr>" + "<tr><th>Notes</th><td>" + feature.properties.notes + "</td></tr>" + "<tr><th>Producer</th><td>" + feature.properties.name2 + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.name + "' target='_blank'>" + feature.properties.name + "</a></td></tr>" + "<table>";
+      var content = "<img src='assets/img/cheese/" + feature.properties.image + ".jpg' ><table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.name + "</td></tr>" + "<tr><th>Notes</th><td>" + feature.properties.notes + "</td></tr>" + "<tr><th>Producer</th><td>" + feature.properties.name2 + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.name + "' target='_blank'>" + feature.properties.name + "</a></td></tr>" + "<table>";
       layer.on({
         // click: function (e) {
         //   $("#feature-title").html(feature.properties.name);
@@ -274,11 +274,11 @@ var goatLayer = L.geoJson(null);
 
 var goats = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
-    var content = "<img src='../img/cheese/" + feature.properties.image + "'.jpg'class='img-responsive' style='width:50%;display:block;margin-left:auto;margin-right:auto'><h4>" + feature.properties.name + "</h4><h5>" + feature.properties.name2 + "</h5><p><i>" + feature.properties.notes + "</i></p>";
+    var content = "<img src='assets/img/cheese/" + feature.properties.image + ".jpg'class='img-responsive' style='width:50%;display:block;margin-left:auto;margin-right:auto'><h4>" + feature.properties.name + "</h4><h5>" + feature.properties.name2 + "</h5><p><i>" + feature.properties.notes + "</i></p>";
     window.alert (feature.properties.herd);
     mrk = L.marker(latlng, {
       icon: L.icon({
-        iconUrl: "../img/" + feature.properties.herd + ".png",
+        iconUrl: "assets/img/" + feature.properties.herd + ".png",
         iconSize: [40, 60],
         iconAnchor: [20, 60],
         popupAnchor: [0, -25]
@@ -298,7 +298,7 @@ var goats = L.geoJson(null, {
   onEachFeature: function (feature, layer) {
     
     if (feature.properties) {
-      var content = "<img src='../img/cheese/" + feature.properties.image + "'.jpg' ><table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.name + "</td></tr>" + "<tr><th>Notes</th><td>" + feature.properties.notes + "</td></tr>" + "<tr><th>Producer</th><td>" + feature.properties.name2 + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.name + "' target='_blank'>" + feature.properties.name + "</a></td></tr>" + "<table>";
+      var content = "<img src='assets/img/cheese/" + feature.properties.image + ".jpg' ><table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.name + "</td></tr>" + "<tr><th>Notes</th><td>" + feature.properties.notes + "</td></tr>" + "<tr><th>Producer</th><td>" + feature.properties.name2 + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.name + "' target='_blank'>" + feature.properties.name + "</a></td></tr>" + "<table>";
       layer.on({
         // click: function (e) {
         //   $("#feature-title").html(feature.properties.name);
@@ -330,11 +330,11 @@ var sheepLayer = L.geoJson(null);
 
 var sheep = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
-    var content = "<img src='../img/cheese/" + feature.properties.image + "'.jpg'class='img-responsive' style='width:50%;display:block;margin-left:auto;margin-right:auto'><h4>" + feature.properties.name + "</h4><h5>" + feature.properties.name2 + "</h5><p><i>" + feature.properties.notes + "</i></p>";
+    var content = "<img src='assets/img/cheese/" + feature.properties.image + ".jpg'class='img-responsive' style='width:50%;display:block;margin-left:auto;margin-right:auto'><h4>" + feature.properties.name + "</h4><h5>" + feature.properties.name2 + "</h5><p><i>" + feature.properties.notes + "</i></p>";
     window.alert (feature.properties.herd);
     mrk = L.marker(latlng, {
       icon: L.icon({
-        iconUrl: "../img/" + feature.properties.herd + ".png",
+        iconUrl: "assets/img/" + feature.properties.herd + ".png",
         iconSize: [40, 60],
         iconAnchor: [20, 60],
         popupAnchor: [0, -25]
@@ -354,7 +354,7 @@ var sheep = L.geoJson(null, {
   onEachFeature: function (feature, layer) {
     
     if (feature.properties) {
-      var content = "<img src='../img/cheese/" + feature.properties.image + "'.jpg' ><table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.name + "</td></tr>" + "<tr><th>Notes</th><td>" + feature.properties.notes + "</td></tr>" + "<tr><th>Producer</th><td>" + feature.properties.name2 + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.name + "' target='_blank'>" + feature.properties.name + "</a></td></tr>" + "<table>";
+      var content = "<img src='assets/img/cheese/" + feature.properties.image + ".jpg' ><table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.name + "</td></tr>" + "<tr><th>Notes</th><td>" + feature.properties.notes + "</td></tr>" + "<tr><th>Producer</th><td>" + feature.properties.name2 + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.name + "' target='_blank'>" + feature.properties.name + "</a></td></tr>" + "<table>";
       layer.on({
         // click: function (e) {
         //   $("#feature-title").html(feature.properties.name);
@@ -375,7 +375,7 @@ var sheep = L.geoJson(null, {
     }
   }
 });
-$.getJSON("../../data/sheep.geojson", function (data) {
+$.getJSON("data/sheep.geojson", function (data) {
   sheep.addData(data);
   markerClusters.addLayer(sheep);
   map.addLayer(sheepLayer);
