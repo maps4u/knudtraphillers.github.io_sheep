@@ -218,7 +218,7 @@ var cowLayer = L.geoJson(null);
 
 var cows = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
-    var content = "<img src='../img/cheese/" + feature.properties.image + "'.jpg'class='img-responsive' style='width:50%;display:block;margin-left:auto;margin-right:auto'><h4>" + feature.properties.name + "</h4><h5>" + feature.properties.name2 + "</h5><p><i>" + feature.properties.notes + "</i></p>";
+    var content = "<img src='bootleaf-cheese/assets/img/cheese/" + feature.properties.image + "'.jpg'class='img-responsive' style='width:50%;display:block;margin-left:auto;margin-right:auto'><h4>" + feature.properties.name + "</h4><h5>" + feature.properties.name2 + "</h5><p><i>" + feature.properties.notes + "</i></p>";
     window.alert (feature.properties.herd);
     mrk = L.marker(latlng, {
       icon: L.icon({
