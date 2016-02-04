@@ -222,7 +222,7 @@ var cows = L.geoJson(null, {
     window.alert (feature.properties.herd);
     mrk = L.marker(latlng, {
       icon: L.icon({
-        iconUrl: "assets/img/" + str.toLowerCase(feature.properties.herd) + ".png",
+        iconUrl: "assets/img/" + feature.properties.herd.toLowerCase() + ".png",
         iconSize: [40, 60],
         iconAnchor: [20, 60],
         popupAnchor: [0, -25]
@@ -278,7 +278,7 @@ var goats = L.geoJson(null, {
     window.alert (feature.properties.herd);
     mrk = L.marker(latlng, {
       icon: L.icon({
-        iconUrl: "assets/img/" + str.toLowerCase(feature.properties.herd) + ".png",
+        iconUrl: "assets/img/" + feature.properties.herd.toLowerCase() + ".png",
         iconSize: [40, 60],
         iconAnchor: [20, 60],
         popupAnchor: [0, -25]
@@ -334,7 +334,7 @@ var sheep = L.geoJson(null, {
     window.alert (feature.properties.herd);
     mrk = L.marker(latlng, {
       icon: L.icon({
-        iconUrl: "assets/img/" + str.toLowerCase(feature.properties.herd) + ".png",
+        iconUrl: "assets/img/" + feature.properties.herd.toLowerCase() + ".png",
         iconSize: [40, 60],
         iconAnchor: [20, 60],
         popupAnchor: [0, -25]
