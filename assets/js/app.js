@@ -1,4 +1,4 @@
-var map, featureList, regionSearch = [], cowSearch = [], goatSearch = [], sheepSearch = [];
+var map, featureList, cowSearch = [], goatSearch = [], sheepSearch = [];
 
 map = L.map("map", {
   zoom: 8,
