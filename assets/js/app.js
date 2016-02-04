@@ -113,7 +113,7 @@ function syncSidebar() {
   cows.eachLayer(function (layer) {
     if (map.hasLayer(cowLayer)) {
       if (map.getBounds().contains(layer.getLatLng())) {
-        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/cow.png"></td><td class="feature-name">' + layer.feature.properties.name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="24" src="assets/img/cow.png"></td><td class="feature-name">' + layer.feature.properties.name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     }
   });
@@ -121,7 +121,7 @@ function syncSidebar() {
   goats.eachLayer(function (layer) {
     if (map.hasLayer(goatLayer)) {
       if (map.getBounds().contains(layer.getLatLng())) {
-        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/cheese.png"></td><td class="feature-name">' + layer.feature.properties.name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="24" src="assets/img/goat.png"></td><td class="feature-name">' + layer.feature.properties.name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     }
   });
@@ -129,7 +129,7 @@ function syncSidebar() {
   sheep.eachLayer(function (layer) {
     if (map.hasLayer(sheepLayer)) {
       if (map.getBounds().contains(layer.getLatLng())) {
-        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/cheese.png"></td><td class="feature-name">' + layer.feature.properties.name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="24" src="assets/img/cheese.png"></td><td class="feature-name">' + layer.feature.properties.name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     }
   });
@@ -222,7 +222,7 @@ var cows = L.geoJson(null, {
     window.alert (feature.properties.herd);
     mrk = L.marker(latlng, {
       icon: L.icon({
-        iconUrl: "assets/img/" + toLowerCase(feature.properties.herd) + ".png",
+        iconUrl: "assets/img/" + str.toLowerCase(feature.properties.herd) + ".png",
         iconSize: [40, 60],
         iconAnchor: [20, 60],
         popupAnchor: [0, -25]
@@ -278,7 +278,7 @@ var goats = L.geoJson(null, {
     window.alert (feature.properties.herd);
     mrk = L.marker(latlng, {
       icon: L.icon({
-        iconUrl: "assets/img/" + toLowerCase(feature.properties.herd) + ".png",
+        iconUrl: "assets/img/" + str.toLowerCase(feature.properties.herd) + ".png",
         iconSize: [40, 60],
         iconAnchor: [20, 60],
         popupAnchor: [0, -25]
@@ -334,7 +334,7 @@ var sheep = L.geoJson(null, {
     window.alert (feature.properties.herd);
     mrk = L.marker(latlng, {
       icon: L.icon({
-        iconUrl: "assets/img/" + toLowerCase(feature.properties.herd) + ".png",
+        iconUrl: "assets/img/" + str.toLowerCase(feature.properties.herd) + ".png",
         iconSize: [40, 60],
         iconAnchor: [20, 60],
         popupAnchor: [0, -25]
